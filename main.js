@@ -16,3 +16,4 @@ wrap.callbackCall('/api/v1/courses/95/pages', null, null, function (err, pages) 
         console.log(share.length)
     })
 })
+//need to write a function to delete file: https://canvas.instructure.com/doc/api/files.html, scroll down to "delete file" . Will have to delete anything that's in "shared" from files.
