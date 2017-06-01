@@ -14,16 +14,22 @@ wrap.callbackCall('/api/v1/courses/95/pages', null, null, function (err, pages) 
         /*var fileName = files.map(function (x) {return x.display_name})*/
 
         console.log(files.length)
-        var share = files.filter(function (file) {
+        var shared = files.filter(function (file) {
             //filter the objects from files to be included
-            return pages.includes(file.title)
+            return pages.includes(file.display_name)
         })
-        console.log(share.length)
-        //write some stuff down because I'm trying to learn how to do this
-        function deleteFiles(share) {
-            wrap.delete('/api/v1/files/:id')
+        console.log(shared.length)
+
+        deleteFiles(shared)
+
+        function deleteFiles(shared) {
+            shared.forEach(function (item) {
+                wrap.callbackCall('https://byui.instructure.com/api/v1/files/' + shared[item].id, {}, DELETE)
+
+                //console.log(shared.length) //double checking that the loop deleted everything. Should return 0.
+            });
+
         }
     })
-})
 
-//Basically will have to empty the variable "shared" because they are all the files that we do not want.
+})
