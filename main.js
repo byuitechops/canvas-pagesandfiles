@@ -15,15 +15,17 @@ wrap.callbackCall('/api/v1/courses/95/pages', null, null, function (err, pages) 
 
         console.log(files.length)
         var shared = files.filter(function (file) {
-            //filter the objects from files to be included
+            //filter the objects from files that are associated with a page
             return pages.includes(file.display_name)
         })
+        //log the length of the items that are duplicates
         console.log(shared.length)
 
         deleteFiles(shared)
 
         function deleteFiles(shared) {
             shared.forEach(function (item) {
+                //iterate through each item in the list and delete it based on its id
                 wrap.callbackCall('https://byui.instructure.com/api/v1/files/' + shared[item].id, {}, DELETE)
 
                 //console.log(shared.length) //double checking that the loop deleted everything. Should return 0.
