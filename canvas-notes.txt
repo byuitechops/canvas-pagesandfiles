@@ -1,2 +1,11 @@
 In canvas, files need to be deleted using the id
 but pages need to be removed using a url
+--both require an api token, and for my sandbox, it is available in main.js
+
+Things to try/take note of for the delete-files script
+
+var shared = pages.filter(function (file){
+	return files.includes(pages.title)
+})
+
+the .includes function returns a true or false!
