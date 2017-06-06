@@ -11,4 +11,5 @@ var shared = pages.filter(function (file){
 the .includes function returns a true or false!
 
 PAGES: pages that we decide to keep will only be available in the pages directory in canvas,
-FILES: files that we decide to keep that are not being used in pages will be moved to a separate folder and identified as files we are not using.
+FILES: files that we decide to keep that are not being used in pages will be moved to a separate folder and identified as files 
+we are not using.
