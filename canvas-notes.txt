@@ -1,0 +1,2 @@
+In canvas, files need to be deleted using the id
+but pages need to be removed using a url
