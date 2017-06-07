@@ -13,3 +13,8 @@ the .includes function returns a true or false!
 PAGES: pages that we decide to keep will only be available in the pages directory in canvas,
 FILES: files that we decide to keep that are not being used in pages will be moved to a separate folder and identified as files 
 we are not using.
+
+Things I can do to improve my program
+1. Not hardcode the id
+2. Be able to loop through lists of ids that are passed into the program by another program
+3. Print the name of the course and that the process of deletion has been completed
