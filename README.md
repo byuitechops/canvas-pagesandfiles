@@ -1,4 +1,4 @@
-#canvas-pagesandfiles
+# canvas-pagesandfiles
 
 This program uses a node module that Ben wrote (canvas-api-wrapper) to automate the deletion of duplicate files from a course upload in canvas. 
 The program assumes that you will hardcode the id inside the api call for the course.
