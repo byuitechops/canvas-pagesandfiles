@@ -48,9 +48,8 @@ module.exports = (course, stepCallback) => {
                 if (err) {
                     console.log(err)
                 }
-                stepCallback();
+                stepCallback(null, course);
             })
         })
     })
-    stepCallback(null, course);
 }
