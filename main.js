@@ -7,7 +7,7 @@
 //required for child module template
 const async = require('async')
 const canvas = require('canvas-wrapper')
-var courseId = 490;
+var courseId = course.info.canvasOU;
 
 module.exports = (course, stepCallback) => {
     course.addModuleReport('files-removeDuplicates');
@@ -32,7 +32,7 @@ module.exports = (course, stepCallback) => {
             var duplicates = files.filter(function (file) {
                 return pages.includes(file.display_name)
             })
-            console.log("DUPLICATES", duplicates.length)
+            //console.log("DUPLICATES", duplicates.length)
 
             async.each(duplicates, function (file, cb) {
                 canvas.delete('/api/v1/files/' + file.id, (err, body) => {

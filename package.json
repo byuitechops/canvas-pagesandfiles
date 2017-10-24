@@ -1,14 +1,15 @@
 {
-  "name": "file-delete",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "canvas-api-wrapper": "^1.0.2"
-  }
+    "name": "file-delete",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "canvas-wrapper": "^1.0.0",
+        "async": "^2.5.0"
+    }
 }
