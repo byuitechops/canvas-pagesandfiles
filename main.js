@@ -1,46 +1,56 @@
-/*eslint-env node*/
+/*eslint-env node es6*/
 /*eslint no-console:0*/
 /*global console*/
 
-//include Ben's wrapper that allows the computer to give us all the pages or files and not just the first handful that the computer can get for JSON.
-var wrap = require('canvas-api-wrapper')('10706~qwzHce6h66ksreAOflNk1LfTDlNlQG8RGSoktay4Jm8ffgXcxpCR56bDc1O2pvXT');
+/*deletes page duplicates between pages and files brought over by d2l*/
 
-//get the pages and add a filetype
-wrap.callbackCall('/api/v1/courses/95/pages', null, null, function (err, pages) {
-    pages = pages.map(function (x) {
-        return x.title + '.html'
-    })
-    //print out how many pages there are
-    console.log("PAGES", pages.length);
+//required for child module template
+const async = require('async')
+const canvas = require('canvas-wrapper')
+var courseId = 490;
 
-    //get the files, filter them, and print out how many are shared between pages and files.
-    wrap.callbackCall('/api/v1/courses/95/files', null, null, function (err, files) {
-        /*var fileName = files.map(function (x) {return x.display_name})*/
-
-        console.log("FILES", files.length)
-
-        var shared = files.filter(function (file) {
-            //filter the objects from files that are associated with a page
-            return pages.includes(file.display_name)
-        })
-        //log the length of the items that are duplicates
-        console.log("DUPLICATES", shared.length)
-
-        deleteFiles(shared)
-
-        function deleteFiles(shared) {
-            shared.forEach(function (item, i) {
-                //iterate through each item in the list and delete it based on its id
-                wrap.callbackCall('/api/v1/files/' + item.id, null, 'DELETE', function (err, item) {
-                    console.log('i:', i)
-                    console.log('item', item)
-                    console.log('err:', err)
-                    console.log('------------------------------------------')
-
-                })
-            });
-
+module.exports = (course, stepCallback) => {
+    course.addModuleReport('files-removeDuplicates');
+    /*find pages*/
+    var getPages = canvas.get('/api/v1/courses/' + courseId + '/pages', function (err, pages) {
+        if (err) {
+            course.throwErr('files-removeDuplicates', err)
+            return;
         }
-    })
+        pages = pages.map(function (page) {
+            return page.title + '.html'
+        });
+        //console.log("PAGES", pages.length);
+        /*find files*/
+        var getFiles = canvas.get('/api/v1/courses/' + courseId + '/files', function (err, files) {
+            if (err) {
+                course.throwErr('files-removeDuplicates', err)
+                return;
+            }
+            //console.log("FILES", files.length);
+            /*find duplicates*/
+            var duplicates = files.filter(function (file) {
+                return pages.includes(file.display_name)
+            })
+            console.log("DUPLICATES", duplicates.length)
 
-})
+            async.each(duplicates, function (file, cb) {
+                canvas.delete('/api/v1/files/' + file.id, (err, body) => {
+                    if (err) {
+                        course.throwErr('files-removeDuplicates', err)
+                        cb(err);
+                        return;
+                    }
+                    course.success('files-removeDuplicates', 'files-removeDuplicates file ' + file.display_name + ' deleted successfully');
+                    cb();
+                })
+            }, function (err) {
+                if (err) {
+                    console.log(err)
+                }
+                stepCallback();
+            })
+        })
+    })
+    stepCallback(null, course);
+}
