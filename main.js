@@ -2,7 +2,7 @@
 /*eslint no-console:0*/
 /*global console*/
 
-/*deletes page duplicates between pages and files brought over by d2l*/
+/*deletes page duplicates between pages and files duplicated by d2l*/
 
 //required for child module template
 const async = require('async')
