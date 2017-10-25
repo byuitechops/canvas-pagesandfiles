@@ -7,9 +7,9 @@
 //required for child module template
 const async = require('async')
 const canvas = require('canvas-wrapper')
-var courseId = course.info.canvasOU;
 
 module.exports = (course, stepCallback) => {
+    var courseId = course.info.canvasOU;
     course.addModuleReport('files-removeDuplicates');
     /*find pages*/
     var getPages = canvas.get('/api/v1/courses/' + courseId + '/pages', function (err, pages) {
